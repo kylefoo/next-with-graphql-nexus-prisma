@@ -8,13 +8,21 @@ const AllUsers: React.FC = () => {
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
+  const renderAllUser = () => {
+    if (data && data.allUsers) {
+      return (data.allUsers.map(user => (
+        <li key={user?.id}>{user?.name}</li>
+      )))
+    } else {
+        return null
+    }
+  }
+  
   return (
     <div>
-      <p>There are {data?.allUsers.length} user(s) in the database:</p>
+      <p>There are {data && data.allUsers ? data?.allUsers.length : '0' } user(s) in the database:</p>
       <ul>
-        {data?.allUsers.map(user => (
-          <li key={user.id}>{user.name}</li>
-        ))}
+        {renderAllUser()}
       </ul>
     </div>
   );
